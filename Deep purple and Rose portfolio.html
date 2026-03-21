@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Deborah Olofin — Data Scientist & ML Engineer</title>
+<style>
+:root {
+  --bg:     #0d0618;
+  --bg2:    #130920;
+  --bg3:    #1a0f2a;
+  --bg4:    #201535;
+  --purple: #7c3aed;
+  --purple2:#9b5cf5;
+  --p-dim:  rgba(124,58,237,0.12);
+  --p-glow: rgba(124,58,237,0.25);
+  --rose:   #e8688a;
+  --rose2:  #f48ca8;
+  --r-dim:  rgba(232,104,138,0.10);
+  --r-glow: rgba(232,104,138,0.22);
+  --white:  #faf7fc;
+  --off:    rgba(250,247,252,0.72);
+  --muted:  rgba(250,247,252,0.38);
+  --dim:    rgba(250,247,252,0.14);
+  --rule:   rgba(124,58,237,0.18);
+  --rule2:  rgba(250,247,252,0.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,sans-serif;
+  font-weight:300;overflow-x:hidden;cursor:none;line-height:1.6;}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;border-radius:50%;
+  background:var(--rose);pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);transition:transform .12s,background .2s;}
+#ring{position:fixed;width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(232,104,138,.4);pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:24px 72px;display:flex;justify-content:space-between;align-items:center;
+  background:rgba(13,6,24,.85);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--rule);
+}
+.logo{font-family:Georgia,serif;font-weight:700;font-size:1.05rem;
+  color:var(--white);text-decoration:none;letter-spacing:.05em;}
+.logo span{color:var(--rose);}
+.nav-links{display:flex;gap:44px;list-style:none;}
+.nav-links a{font-family:'Courier New',monospace;font-size:.65rem;
+  color:var(--muted);text-decoration:none;letter-spacing:.15em;
+  text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--rose);}
+
+/* HERO */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;padding:140px 72px 100px;
+  position:relative;overflow:hidden;
+}
+/* Ambient glow */
+#hero::before{content:'';position:absolute;
+  width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(124,58,237,.08) 0%,transparent 65%);
+  top:-200px;right:-200px;pointer-events:none;}
+#hero::after{content:'';position:absolute;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,104,138,.05) 0%,transparent 65%);
+  bottom:-100px;left:-100px;pointer-events:none;}
+
+.hc{position:relative;z-index:2;max-width:860px;}
+
+.h-label{
+  font-family:'Courier New',monospace;font-size:.64rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:32px;
+  display:flex;align-items:center;gap:14px;
+  opacity:0;animation:up .7s ease .15s forwards;
+}
+.h-label::before{content:'';width:28px;height:1px;background:var(--rose);}
+
+.h-name{
+  font-family:Georgia,serif;font-weight:700;
+  font-size:clamp(3.5rem,7vw,6.8rem);
+  line-height:.93;letter-spacing:-.03em;
+  color:var(--white);
+  opacity:0;animation:up .8s ease .3s forwards;
+}
+.h-name .sub{
+  display:block;font-weight:300;font-style:italic;
+  color:rgba(250,247,252,.35);font-size:.42em;
+  letter-spacing:.02em;margin-top:10px;
+}
+
+.h-line{
+  width:1px;height:60px;background:linear-gradient(to bottom,var(--purple2),var(--rose));
+  margin:36px 0;opacity:0;animation:up .7s ease .5s forwards;
+}
+
+.h-title{
+  font-family:'Courier New',monospace;font-size:.78rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:28px;
+  opacity:0;animation:up .7s ease .62s forwards;
+}
+
+.h-statement{
+  font-family:Georgia,serif;font-style:italic;font-weight:300;
+  font-size:clamp(1.2rem,2vw,1.65rem);
+  color:var(--off);line-height:1.7;max-width:580px;
+  margin-bottom:52px;
+  opacity:0;animation:up .8s ease .78s forwards;
+}
+.h-statement strong{font-style:normal;color:var(--white);font-weight:600;}
+
+.h-cta{display:flex;gap:14px;flex-wrap:wrap;
+  opacity:0;animation:up .7s ease .95s forwards;}
+
+.btn-rose{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:15px 30px;background:var(--rose);color:var(--bg);
+  font-family:'Courier New',monospace;font-size:.69rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;cursor:none;transition:all .22s;font-weight:400;
+  border:1px solid transparent;
+}
+.btn-rose:hover{background:var(--rose2);transform:translateY(-3px);box-shadow:0 10px 36px var(--r-glow);}
+
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:15px 30px;background:transparent;color:var(--purple2);
+  border:1px solid rgba(124,58,237,.35);
+  font-family:'Courier New',monospace;font-size:.69rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;cursor:none;transition:all .22s;
+}
+.btn-ghost:hover{background:var(--p-dim);border-color:var(--purple2);transform:translateY(-3px);}
+
+.live-tag{
+  display:inline-flex;align-items:center;gap:9px;margin-top:32px;
+  padding:9px 16px;background:var(--r-dim);
+  border:1px solid rgba(232,104,138,.2);
+  font-family:'Courier New',monospace;font-size:.61rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--rose);
+  width:fit-content;opacity:0;animation:up .7s ease 1.15s forwards;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--rose);
+  animation:pulse 1.6s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(1.6);}}
+@keyframes up{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* SECTIONS */
+section{padding:100px 72px;position:relative;}
+.eye{font-family:'Courier New',monospace;font-size:.6rem;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--rose);
+  margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.eye::before{content:'';width:18px;height:1px;background:var(--rose);}
+.stitle{
+  font-family:Georgia,serif;font-weight:700;
+  font-size:clamp(2rem,3.6vw,3rem);line-height:1.06;
+  letter-spacing:-.02em;margin-bottom:64px;
+}
+
+/* ABOUT */
+#about{background:var(--bg2);border-top:1px solid var(--rule2);}
+.ag{display:grid;grid-template-columns:1.15fr 1fr;gap:80px;max-width:1060px;}
+.at p{font-size:.87rem;color:var(--off);line-height:2;margin-bottom:16px;}
+.at p strong{color:var(--white);font-weight:500;}
+.pq{
+  font-family:Georgia,serif;font-style:italic;font-size:1.22rem;
+  color:var(--white);line-height:1.7;
+  border-left:2px solid var(--rose);padding-left:22px;margin:26px 0;
+}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.sc{
+  background:var(--bg3);padding:28px;
+  border:1px solid var(--rule2);transition:all .25s;position:relative;overflow:hidden;
+}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--purple),var(--rose));
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.sc:hover{border-color:rgba(232,104,138,.2);transform:translateY(-3px);}
+.sc:hover::before{transform:scaleX(1);}
+.sn{font-family:Georgia,serif;font-weight:700;font-size:2.4rem;
+  color:var(--rose);line-height:1;margin-bottom:7px;}
+.sl{font-size:.7rem;color:var(--muted);line-height:1.5;}
+
+/* PROJECTS */
+#projects{background:var(--bg);border-top:1px solid var(--rule2);}
+.plist{max-width:1060px;}
+.prow{
+  display:grid;grid-template-columns:56px 1fr auto;
+  gap:36px;align-items:start;
+  border-top:1px solid var(--rule2);padding:48px 0;
+  transition:padding-left .3s;
+}
+.prow:hover{padding-left:10px;}
+.pno{font-family:Georgia,serif;font-style:italic;font-weight:300;
+  font-size:2.8rem;color:rgba(232,104,138,.14);line-height:1;margin-top:8px;}
+.ptags{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.pt{font-family:'Courier New',monospace;font-size:.57rem;
+  letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;border:1px solid;}
+.tl{color:var(--rose);border-color:rgba(232,104,138,.28);background:rgba(232,104,138,.07);}
+.td{color:var(--purple2);border-color:rgba(155,92,245,.22);background:rgba(155,92,245,.06);}
+.tw{color:var(--muted);border-color:var(--rule2);background:var(--dim);}
+.pn{font-family:Georgia,serif;font-weight:700;
+  font-size:1.42rem;letter-spacing:-.01em;margin-bottom:6px;}
+.pr{font-family:'Courier New',monospace;font-size:.64rem;
+  color:var(--purple2);letter-spacing:.1em;margin-bottom:16px;}
+.pd{font-size:.83rem;color:var(--off);line-height:1.92;
+  margin-bottom:20px;max-width:540px;}
+.mets{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:20px;}
+.mv{font-family:Georgia,serif;font-weight:700;font-size:1.15rem;
+  color:var(--white);margin-bottom:3px;}
+.ml{font-size:.58rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.pills{display:flex;flex-wrap:wrap;gap:6px;}
+.pill{font-size:.67rem;padding:4px 11px;
+  background:var(--dim);border:1px solid var(--rule2);
+  color:var(--muted);transition:all .2s;}
+.pill:hover{background:var(--r-dim);border-color:rgba(232,104,138,.2);color:var(--rose);}
+.pls{display:flex;flex-direction:column;gap:9px;min-width:110px;align-items:flex-end;}
+.pl{display:inline-flex;align-items:center;gap:6px;
+  font-family:'Courier New',monospace;font-size:.63rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;padding:10px 14px;border:1px solid;
+  transition:all .2s;cursor:none;white-space:nowrap;}
+.plr{color:var(--rose);border-color:rgba(232,104,138,.22);}
+.plr:hover{background:var(--r-dim);}
+.plp{color:var(--purple2);border-color:rgba(155,92,245,.2);}
+.plp:hover{background:var(--p-dim);}
+
+/* SKILLS */
+#skills{background:var(--bg2);border-top:1px solid var(--rule2);}
+.skg{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1060px;}
+.sk{background:var(--bg3);padding:30px;border:1px solid var(--rule2);transition:all .22s;}
+.sk:hover{border-color:rgba(232,104,138,.18);background:var(--bg4);}
+.skh{font-family:'Courier New',monospace;font-size:.64rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--purple2);
+  margin-bottom:16px;padding-bottom:12px;
+  border-bottom:1px solid var(--rule);}
+.skt{display:flex;flex-wrap:wrap;gap:6px;}
+.sktag{font-size:.69rem;padding:4px 10px;
+  background:var(--dim);border:1px solid var(--rule2);
+  color:var(--muted);transition:all .2s;}
+.sktag:hover{color:var(--white);border-color:var(--rule);}
+
+/* CONTACT */
+#contact{background:var(--bg);border-top:1px solid var(--rule2);text-align:center;}
+.cw{max-width:500px;margin:0 auto;}
+.ci{font-size:.86rem;color:var(--off);line-height:2;margin-bottom:44px;}
+.ce{display:inline-block;font-family:Georgia,serif;
+  font-style:italic;font-size:1.5rem;color:var(--white);
+  text-decoration:none;border-bottom:1px solid rgba(232,104,138,.3);
+  padding-bottom:4px;transition:all .2s;cursor:none;margin-bottom:44px;}
+.ce:hover{color:var(--rose);border-color:var(--rose);}
+.clinks{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
+.cl{display:inline-flex;align-items:center;gap:7px;
+  padding:12px 20px;border:1px solid var(--rule2);
+  color:var(--muted);text-decoration:none;
+  font-family:'Courier New',monospace;font-size:.67rem;
+  letter-spacing:.08em;text-transform:uppercase;
+  cursor:none;transition:all .2s;}
+.cl:hover{color:var(--rose);border-color:rgba(232,104,138,.3);
+  background:var(--r-dim);transform:translateY(-2px);}
+
+/* FOOTER */
+footer{padding:24px 72px;background:var(--bg2);
+  border-top:1px solid var(--rule2);
+  display:flex;justify-content:space-between;align-items:center;}
+.ft{font-family:'Courier New',monospace;font-size:.59rem;
+  color:var(--muted);letter-spacing:.08em;}
+
+/* REVEAL */
+.rev{opacity:0;transform:translateY(24px);
+  transition:opacity .65s ease,transform .65s ease;}
+.rev.in{opacity:1;transform:translateY(0);}
+
+/* DIVIDER */
+.duo-line{
+  display:flex;gap:0;margin:0 0 64px;width:100%;max-width:100%;
+}
+.duo-line span{flex:1;height:1px;}
+.duo-line .l1{background:linear-gradient(90deg,var(--purple),transparent);}
+.duo-line .l2{background:linear-gradient(90deg,transparent,var(--rose));}
+
+@media(max-width:860px){
+  nav{padding:18px 24px;}
+  section{padding:72px 24px;}
+  #hero{padding:120px 24px 72px;}
+  .ag{grid-template-columns:1fr;gap:44px;}
+  .skg{grid-template-columns:1fr 1fr;}
+  .prow{grid-template-columns:1fr;gap:18px;}
+  .pno{display:none;}
+  .pls{flex-direction:row;align-items:flex-start;}
+  footer{padding:22px 24px;flex-direction:column;gap:6px;text-align:center;}
+}
+@media(max-width:540px){
+  .skg{grid-template-columns:1fr;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .h-cta{flex-direction:column;}
+  .nav-links{gap:20px;}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="ring"></div>
+
+<nav>
+  <a href="#hero" class="logo">D.<span>Olofin</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hc">
+    <p class="h-label">Available for remote roles</p>
+    <h1 class="h-name">
+      Deborah<br>Olofin
+      <span class="sub">Temi</span>
+    </h1>
+    <div class="h-line"></div>
+    <p class="h-title">Data Scientist &nbsp;·&nbsp; Machine Learning Engineer</p>
+    <p class="h-statement">
+      I don't just build models.<br>
+      <strong>I build systems that ship.</strong>
+    </p>
+    <div class="h-cta">
+      <a href="#projects" class="btn-rose">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        View My Work
+      </a>
+      <a href="#contact" class="btn-ghost">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Get In Touch
+      </a>
+    </div>
+    <div class="live-tag">
+      <span class="dot"></span>
+      ML System Live in Production
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="eye">01 — About</div>
+  <h2 class="stitle rev">Who I Am</h2>
+  <div class="duo-line rev"><span class="l1"></span><span class="l2"></span></div>
+  <div class="ag">
+    <div class="at rev">
+      <p>I'm a <strong>Data Scientist and ML Engineer</strong> with a Computer Science foundation and a production ML system currently live and serving real users. I operate across the full spectrum — from rigorous statistical analysis and <strong>time-series forecasting</strong> to end-to-end ML pipeline architecture and live deployment.</p>
+      <div class="pq">Most people build models in notebooks that never leave their laptops. I build systems that ship.</div>
+      <p>My anchor project is a deployed system built on WFP humanitarian data, predicting food prices up to 3 months ahead across conflict-affected states. I independently built approximately <strong>85–90% of the full technical pipeline</strong> while leading a 12-person cross-functional team.</p>
+      <p>Grounded in the <strong>mathematics, algorithms and systems thinking</strong> that sit underneath models. Currently completing <strong>WorldQuant University Applied Data Science Lab</strong> and the <strong>DataCamp ML Engineering track</strong>, while building a Crypto Intelligence Dashboard.</p>
+    </div>
+    <div class="stats rev">
+      <div class="sc"><div class="sn">85–90%</div><div class="sl">of capstone technical pipeline built independently</div></div>
+      <div class="sc"><div class="sn">50K+</div><div class="sl">raw data rows processed into model-ready observations</div></div>
+      <div class="sc"><div class="sn">4</div><div class="sl">ML models built, evaluated and compared in production</div></div>
+      <div class="sc"><div class="sn">3.78</div><div class="sl">CGPA — BSc Computer Science</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="eye">02 — Projects</div>
+  <h2 class="stitle rev">What I've Built</h2>
+  <div class="plist">
+
+    <div class="prow rev">
+      <div class="pno">01</div>
+      <div>
+        <div class="ptags">
+          <span class="pt tl"><span style="display:inline-block;width:5px;height:5px;background:var(--rose);border-radius:50%;margin-right:5px;vertical-align:middle;animation:pulse 1.5s infinite;"></span>Live</span>
+        </div>
+        <h3 class="pn">Early Warning Food Price Monitor</h3>
+        <p class="pr">Team Lead · Lead Data Scientist · Primary ML Engineer</p>
+        <p class="pd">Production-grade multi-model time-series forecasting system predicting monthly retail food prices up to 3 months ahead. Built on WFP humanitarian data — sourced and cleaned 8 datasets, engineered a master dataset of ~2,846 observations from 50,000+ raw rows, trained and evaluated 4 forecasting models against a naive baseline, and deployed a live Streamlit application accessible to non-technical users.</p>
+        <div class="mets">
+          <div><div class="mv">14.7%</div><div class="ml">Best MAPE</div></div>
+          <div><div class="mv">30.8%</div><div class="ml">Avg MAPE</div></div>
+          <div><div class="mv">10/13</div><div class="ml">Prophet wins</div></div>
+          <div><div class="mv">~2,846</div><div class="ml">Model-ready rows</div></div>
+        </div>
+        <div class="pills">
+          <span class="pill">Python</span><span class="pill">Prophet</span><span class="pill">XGBoost</span>
+          <span class="pill">SARIMA</span><span class="pill">SARIMAX</span><span class="pill">Pandas</span>
+          <span class="pill">Scikit-learn</span><span class="pill">Streamlit</span><span class="pill">Git</span>
+        </div>
+      </div>
+      <div class="pls">
+        <a href="https://earlywarningfoodpricemonitor-group3.streamlit.app" target="_blank" class="pl plr">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Live App
+        </a>
+        <a href="https://github.com/Mi-kami/Early-Warning-Food-Price-Monitor-Northeast-Nigeria" target="_blank" class="pl plp">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="prow rev">
+      <div class="pno">02</div>
+      <div>
+        <div class="ptags"><span class="pt td">Complete</span></div>
+        <h3 class="pn">Customer Segmentation System</h3>
+        <p class="pr">Independent Project</p>
+        <p class="pd">K-means clustering pipeline for customer segmentation. Applied elbow method for optimal cluster selection, performed full exploratory data analysis, and produced interpretable segment profiles to support downstream business decision-making.</p>
+        <div class="pills">
+          <span class="pill">Python</span><span class="pill">K-Means</span><span class="pill">Scikit-learn</span>
+          <span class="pill">Pandas</span><span class="pill">Matplotlib</span><span class="pill">Seaborn</span>
+        </div>
+      </div>
+      <div class="pls">
+        <a href="https://github.com/Mi-kami" target="_blank" class="pl plp">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="prow rev">
+      <div class="pno">03</div>
+      <div>
+        <div class="ptags"><span class="pt td">Complete</span></div>
+        <h3 class="pn">Revenue Prediction — Data Scarcity Study</h3>
+        <p class="pr">Independent Project</p>
+        <p class="pd">Multiple linear regression pipeline on a deliberately constrained 50-row dataset, investigating model reliability under data scarcity. Documented train-test split sensitivity, overfitting patterns, regularisation techniques (Ridge, ElasticNet), and validated stability via cross-validation and multi-seed testing. Confirmed: data volume is a hard ceiling no algorithm can fully overcome.</p>
+        <div class="pills">
+          <span class="pill">Python</span><span class="pill">Linear Regression</span><span class="pill">Ridge</span>
+          <span class="pill">ElasticNet</span><span class="pill">GridSearchCV</span><span class="pill">Scikit-learn</span>
+        </div>
+      </div>
+      <div class="pls">
+        <a href="https://github.com/Mi-kami" target="_blank" class="pl plp">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="prow rev">
+      <div class="pno">04</div>
+      <div>
+        <div class="ptags">
+          <span class="pt tw"><span style="display:inline-block;width:5px;height:5px;background:var(--muted);border-radius:50%;margin-right:5px;vertical-align:middle;animation:pulse 2s infinite;"></span>In Progress</span>
+        </div>
+        <h3 class="pn">Crypto Intelligence Dashboard</h3>
+        <p class="pr">AI Intelligence System — Building Now</p>
+        <p class="pd">End-to-end AI-powered intelligence system for cryptocurrency markets. Covers volatility prediction, market regime detection, sentiment analysis from live data sources, and risk signal generation. Building in public — estimated completion Q2 2026.</p>
+        <div class="pills">
+          <span class="pill">Python</span><span class="pill">Time Series</span>
+          <span class="pill">Sentiment Analysis</span><span class="pill">Regime Detection</span>
+          <span class="pill">Risk Modelling</span><span class="pill">Streamlit</span>
+        </div>
+      </div>
+      <div class="pls">
+        <span style="font-family:'Courier New',monospace;font-size:.61rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">Building</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="eye">03 — Skills</div>
+  <h2 class="stitle rev">What I Work With</h2>
+  <div class="skg">
+    <div class="sk rev">
+      <div class="skh">Languages & Libraries</div>
+      <div class="skt">
+        <span class="sktag">Python</span><span class="sktag">Pandas</span>
+        <span class="sktag">NumPy</span><span class="sktag">Scikit-learn</span>
+        <span class="sktag">Matplotlib</span><span class="sktag">Seaborn</span>
+      </div>
+    </div>
+    <div class="sk rev">
+      <div class="skh">ML & Forecasting</div>
+      <div class="skt">
+        <span class="sktag">Facebook Prophet</span><span class="sktag">XGBoost</span>
+        <span class="sktag">SARIMA</span><span class="sktag">SARIMAX</span>
+        <span class="sktag">Linear Regression</span><span class="sktag">K-Means</span>
+      </div>
+    </div>
+    <div class="sk rev">
+      <div class="skh">Data Science</div>
+      <div class="skt">
+        <span class="sktag">Time-Series Forecasting</span>
+        <span class="sktag">Feature Engineering</span>
+        <span class="sktag">Model Evaluation</span>
+        <span class="sktag">Multi-Horizon Forecasting</span>
+        <span class="sktag">Cross-Validation</span>
+        <span class="sktag">EDA</span>
+      </div>
+    </div>
+    <div class="sk rev">
+      <div class="skh">Pipeline Engineering</div>
+      <div class="skt">
+        <span class="sktag">End-to-End ML Pipelines</span>
+        <span class="sktag">Multi-Source Integration</span>
+        <span class="sktag">Data Cleaning</span>
+        <span class="sktag">Lag Features</span>
+        <span class="sktag">Structural Break Detection</span>
+        <span class="sktag">Outlier Detection</span>
+      </div>
+    </div>
+    <div class="sk rev">
+      <div class="skh">Deployment & Tools</div>
+      <div class="skt">
+        <span class="sktag">Streamlit</span><span class="sktag">Git</span>
+        <span class="sktag">GitHub</span><span class="sktag">Jupyter</span>
+        <span class="sktag">Google Colab</span><span class="sktag">Version Control</span>
+      </div>
+    </div>
+    <div class="sk rev">
+      <div class="skh">Foundations & Design</div>
+      <div class="skt">
+        <span class="sktag">Algorithm Design</span>
+        <span class="sktag">Data Structures</span>
+        <span class="sktag">Database Systems</span>
+        <span class="sktag">Graphic Design</span>
+        <span class="sktag">Canva</span>
+        <span class="sktag">Data Storytelling</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="eye" style="justify-content:center;">04 — Contact</div>
+  <h2 class="stitle rev" style="text-align:center;">Let's Work Together</h2>
+  <div class="cw rev">
+    <p class="ci">I'm actively seeking remote Data Scientist and ML Engineer roles internationally. If your team works on hard problems with real data — I want to hear from you.</p>
+    <a href="mailto:deboraholofin43@gmail.com" class="ce">deboraholofin43@gmail.com</a>
+    <div class="clinks">
+      <a href="https://linkedin.com/in/deborah-olofin" target="_blank" class="cl">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/Mi-kami" target="_blank" class="cl">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="https://earlywarningfoodpricemonitor-group3.streamlit.app" target="_blank" class="cl">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Live Project
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="ft">© 2026 Deborah Olofin — Data Scientist & ML Engineer</span>
+  <span class="ft">Built to last.</span>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function loop(){
+  rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.prow,.sc,.sk').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cur.style.transform='translate(-50%,-50%) scale(2.4)';
+    cur.style.background='var(--purple2)';
+    ring.style.width='50px';ring.style.height='50px';
+    ring.style.borderColor='rgba(155,92,245,.5)';
+  });
+  el.addEventListener('mouseleave',()=>{
+    cur.style.transform='translate(-50%,-50%) scale(1)';
+    cur.style.background='var(--rose)';
+    ring.style.width='36px';ring.style.height='36px';
+    ring.style.borderColor='rgba(232,104,138,.4)';
+  });
+});
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+},{threshold:0.08});
+document.querySelectorAll('.rev').forEach((el,i)=>{
+  el.style.transitionDelay=(i%4)*.07+'s';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
