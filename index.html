@@ -1,608 +1,897 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Deborah Olofin — Data Scientist & ML Engineer</title>
-<style>
-:root {
-  --bg:     #0d0618;
-  --bg2:    #130920;
-  --bg3:    #1a0f2a;
-  --bg4:    #201535;
-  --purple: #7c3aed;
-  --purple2:#9b5cf5;
-  --p-dim:  rgba(124,58,237,0.12);
-  --p-glow: rgba(124,58,237,0.25);
-  --rose:   #e8688a;
-  --rose2:  #f48ca8;
-  --r-dim:  rgba(232,104,138,0.10);
-  --r-glow: rgba(232,104,138,0.22);
-  --white:  #faf7fc;
-  --off:    rgba(250,247,252,0.72);
-  --muted:  rgba(250,247,252,0.38);
-  --dim:    rgba(250,247,252,0.14);
-  --rule:   rgba(124,58,237,0.18);
-  --rule2:  rgba(250,247,252,0.06);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,sans-serif;
-  font-weight:300;overflow-x:hidden;cursor:none;line-height:1.6;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deborah Olofin — Data Scientist & ML Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* CURSOR */
-#cur{position:fixed;width:10px;height:10px;border-radius:50%;
-  background:var(--rose);pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);transition:transform .12s,background .2s;}
-#ring{position:fixed;width:36px;height:36px;border-radius:50%;
-  border:1px solid rgba(232,104,138,.4);pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s;}
+    :root {
+      --bg: #0d0618;
+      --bg2: #120820;
+      --bg3: #1a0d2e;
+      --rose: #e8688a;
+      --rose-dim: rgba(232,104,138,0.15);
+      --rose-border: rgba(232,104,138,0.3);
+      --text: #f0eaf6;
+      --text-dim: #9b8db0;
+      --text-muted: #6b5f80;
+      --border: rgba(255,255,255,0.07);
+      --card-bg: rgba(255,255,255,0.03);
+    }
 
-/* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:24px 72px;display:flex;justify-content:space-between;align-items:center;
-  background:rgba(13,6,24,.85);backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--rule);
-}
-.logo{font-family:Georgia,serif;font-weight:700;font-size:1.05rem;
-  color:var(--white);text-decoration:none;letter-spacing:.05em;}
-.logo span{color:var(--rose);}
-.nav-links{display:flex;gap:44px;list-style:none;}
-.nav-links a{font-family:'Courier New',monospace;font-size:.65rem;
-  color:var(--muted);text-decoration:none;letter-spacing:.15em;
-  text-transform:uppercase;transition:color .2s;}
-.nav-links a:hover{color:var(--rose);}
+    html { scroll-behavior: smooth; }
 
-/* HERO */
-#hero{
-  min-height:100vh;display:flex;flex-direction:column;
-  justify-content:center;padding:140px 72px 100px;
-  position:relative;overflow:hidden;
-}
-/* Ambient glow */
-#hero::before{content:'';position:absolute;
-  width:800px;height:800px;border-radius:50%;
-  background:radial-gradient(circle,rgba(124,58,237,.08) 0%,transparent 65%);
-  top:-200px;right:-200px;pointer-events:none;}
-#hero::after{content:'';position:absolute;
-  width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(232,104,138,.05) 0%,transparent 65%);
-  bottom:-100px;left:-100px;pointer-events:none;}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-.hc{position:relative;z-index:2;max-width:860px;}
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(13,6,24,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      color: var(--rose);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--rose); }
+    .nav-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--rose);
+      border: 1px solid var(--rose-border);
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      background: var(--rose-dim);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--rose);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
 
-.h-label{
-  font-family:'Courier New',monospace;font-size:.64rem;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--rose);margin-bottom:32px;
-  display:flex;align-items:center;gap:14px;
-  opacity:0;animation:up .7s ease .15s forwards;
-}
-.h-label::before{content:'';width:28px;height:1px;background:var(--rose);}
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(232,104,138,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-glow2 {
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(138,72,232,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { max-width: 900px; position: relative; z-index: 1; }
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--rose);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-label::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--rose);
+    }
+    h1 {
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    h1 .name-line { display: block; }
+    h1 .name-accent { color: var(--rose); }
+    .hero-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+    }
+    .hero-tagline {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+    .hero-tagline strong { color: var(--text); font-style: italic; }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 6px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--rose);
+      color: #fff;
+      border: 1px solid var(--rose);
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--rose);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--rose);
+      color: var(--rose);
+    }
+    .btn-cv {
+      background: transparent;
+      color: var(--rose);
+      border: 1px solid var(--rose-border);
+    }
+    .btn-cv:hover {
+      background: var(--rose-dim);
+    }
+    .hero-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 3rem;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid var(--rose-border);
+      border-radius: 8px;
+      background: var(--rose-dim);
+    }
+    .hero-stat-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--rose);
+      animation: pulse 2s infinite;
+    }
+    .hero-stat-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--rose);
+      letter-spacing: 0.06em;
+    }
 
-.h-name{
-  font-family:Georgia,serif;font-weight:700;
-  font-size:clamp(3.5rem,7vw,6.8rem);
-  line-height:.93;letter-spacing:-.03em;
-  color:var(--white);
-  opacity:0;animation:up .8s ease .3s forwards;
-}
-.h-name .sub{
-  display:block;font-weight:300;font-style:italic;
-  color:rgba(250,247,252,.35);font-size:.42em;
-  letter-spacing:.02em;margin-top:10px;
-}
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 6rem 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--rose);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 48px;
+      height: 1px;
+      background: var(--rose-border);
+    }
+    h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-.h-line{
-  width:1px;height:60px;background:linear-gradient(to bottom,var(--purple2),var(--rose));
-  margin:36px 0;opacity:0;animation:up .7s ease .5s forwards;
-}
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+      line-height: 1.75;
+      font-size: 0.95rem;
+    }
+    .about-text p strong { color: var(--text); }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: var(--rose-border); }
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--rose);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
 
-.h-title{
-  font-family:'Courier New',monospace;font-size:.78rem;
-  letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:28px;
-  opacity:0;animation:up .7s ease .62s forwards;
-}
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 1.5rem;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .project-card:hover {
+      border-color: var(--rose-border);
+      background: rgba(232,104,138,0.04);
+    }
+    .project-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 2.5rem;
+      font-weight: 500;
+      color: var(--border);
+      line-height: 1;
+      padding-top: 0.25rem;
+      transition: color 0.25s;
+    }
+    .project-card:hover .project-num { color: var(--rose-border); }
+    .project-body {}
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .project-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+    .status-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .status-live {
+      background: rgba(74,222,128,0.1);
+      color: #4ade80;
+      border: 1px solid rgba(74,222,128,0.25);
+    }
+    .status-complete {
+      background: rgba(232,104,138,0.1);
+      color: var(--rose);
+      border: 1px solid var(--rose-border);
+    }
+    .status-building {
+      background: rgba(251,191,36,0.1);
+      color: #fbbf24;
+      border: 1px solid rgba(251,191,36,0.25);
+    }
+    .project-desc {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .project-metrics {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .metric {
+      display: flex;
+      flex-direction: column;
+    }
+    .metric-val {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--rose);
+    }
+    .metric-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.65rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+    .project-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .project-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--rose);
+      text-decoration: none;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--rose-border);
+      border-radius: 4px;
+      transition: background 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .project-link:hover { background: var(--rose-dim); }
 
-.h-statement{
-  font-family:Georgia,serif;font-style:italic;font-weight:300;
-  font-size:clamp(1.2rem,2vw,1.65rem);
-  color:var(--off);line-height:1.7;max-width:580px;
-  margin-bottom:52px;
-  opacity:0;animation:up .8s ease .78s forwards;
-}
-.h-statement strong{font-style:normal;color:var(--white);font-weight:600;}
+    /* ─── SKILLS ─── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .skill-card:hover { border-color: var(--rose-border); }
+    .skill-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--rose);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
 
-.h-cta{display:flex;gap:14px;flex-wrap:wrap;
-  opacity:0;animation:up .7s ease .95s forwards;}
+    /* ─── CONTACT ─── */
+    .contact-inner {
+      max-width: 620px;
+    }
+    .contact-inner p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+    .contact-email {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 1.05rem;
+      color: var(--rose);
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: opacity 0.2s;
+    }
+    .contact-email:hover { opacity: 0.75; }
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
 
-.btn-rose{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:15px 30px;background:var(--rose);color:var(--bg);
-  font-family:'Courier New',monospace;font-size:.69rem;
-  letter-spacing:.1em;text-transform:uppercase;
-  text-decoration:none;cursor:none;transition:all .22s;font-weight:400;
-  border:1px solid transparent;
-}
-.btn-rose:hover{background:var(--rose2);transform:translateY(-3px);box-shadow:0 10px 36px var(--r-glow);}
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
 
-.btn-ghost{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:15px 30px;background:transparent;color:var(--purple2);
-  border:1px solid rgba(124,58,237,.35);
-  font-family:'Courier New',monospace;font-size:.69rem;
-  letter-spacing:.1em;text-transform:uppercase;
-  text-decoration:none;cursor:none;transition:all .22s;
-}
-.btn-ghost:hover{background:var(--p-dim);border-color:var(--purple2);transform:translateY(-3px);}
+    /* ─── TYPING ANIMATION ─── */
+    .typing-cursor::after {
+      content: '|';
+      color: var(--rose);
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
 
-.live-tag{
-  display:inline-flex;align-items:center;gap:9px;margin-top:32px;
-  padding:9px 16px;background:var(--r-dim);
-  border:1px solid rgba(232,104,138,.2);
-  font-family:'Courier New',monospace;font-size:.61rem;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--rose);
-  width:fit-content;opacity:0;animation:up .7s ease 1.15s forwards;
-}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--rose);
-  animation:pulse 1.6s ease infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(1.6);}}
-@keyframes up{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+    /* ─── FADE IN ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-/* SECTIONS */
-section{padding:100px 72px;position:relative;}
-.eye{font-family:'Courier New',monospace;font-size:.6rem;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--rose);
-  margin-bottom:12px;display:flex;align-items:center;gap:10px;}
-.eye::before{content:'';width:18px;height:1px;background:var(--rose);}
-.stitle{
-  font-family:Georgia,serif;font-weight:700;
-  font-size:clamp(2rem,3.6vw,3rem);line-height:1.06;
-  letter-spacing:-.02em;margin-bottom:64px;
-}
-
-/* ABOUT */
-#about{background:var(--bg2);border-top:1px solid var(--rule2);}
-.ag{display:grid;grid-template-columns:1.15fr 1fr;gap:80px;max-width:1060px;}
-.at p{font-size:.87rem;color:var(--off);line-height:2;margin-bottom:16px;}
-.at p strong{color:var(--white);font-weight:500;}
-.pq{
-  font-family:Georgia,serif;font-style:italic;font-size:1.22rem;
-  color:var(--white);line-height:1.7;
-  border-left:2px solid var(--rose);padding-left:22px;margin:26px 0;
-}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
-.sc{
-  background:var(--bg3);padding:28px;
-  border:1px solid var(--rule2);transition:all .25s;position:relative;overflow:hidden;
-}
-.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--purple),var(--rose));
-  transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-.sc:hover{border-color:rgba(232,104,138,.2);transform:translateY(-3px);}
-.sc:hover::before{transform:scaleX(1);}
-.sn{font-family:Georgia,serif;font-weight:700;font-size:2.4rem;
-  color:var(--rose);line-height:1;margin-bottom:7px;}
-.sl{font-size:.7rem;color:var(--muted);line-height:1.5;}
-
-/* PROJECTS */
-#projects{background:var(--bg);border-top:1px solid var(--rule2);}
-.plist{max-width:1060px;}
-.prow{
-  display:grid;grid-template-columns:56px 1fr auto;
-  gap:36px;align-items:start;
-  border-top:1px solid var(--rule2);padding:48px 0;
-  transition:padding-left .3s;
-}
-.prow:hover{padding-left:10px;}
-.pno{font-family:Georgia,serif;font-style:italic;font-weight:300;
-  font-size:2.8rem;color:rgba(232,104,138,.14);line-height:1;margin-top:8px;}
-.ptags{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.pt{font-family:'Courier New',monospace;font-size:.57rem;
-  letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;border:1px solid;}
-.tl{color:var(--rose);border-color:rgba(232,104,138,.28);background:rgba(232,104,138,.07);}
-.td{color:var(--purple2);border-color:rgba(155,92,245,.22);background:rgba(155,92,245,.06);}
-.tw{color:var(--muted);border-color:var(--rule2);background:var(--dim);}
-.pn{font-family:Georgia,serif;font-weight:700;
-  font-size:1.42rem;letter-spacing:-.01em;margin-bottom:6px;}
-.pr{font-family:'Courier New',monospace;font-size:.64rem;
-  color:var(--purple2);letter-spacing:.1em;margin-bottom:16px;}
-.pd{font-size:.83rem;color:var(--off);line-height:1.92;
-  margin-bottom:20px;max-width:540px;}
-.mets{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:20px;}
-.mv{font-family:Georgia,serif;font-weight:700;font-size:1.15rem;
-  color:var(--white);margin-bottom:3px;}
-.ml{font-size:.58rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
-.pills{display:flex;flex-wrap:wrap;gap:6px;}
-.pill{font-size:.67rem;padding:4px 11px;
-  background:var(--dim);border:1px solid var(--rule2);
-  color:var(--muted);transition:all .2s;}
-.pill:hover{background:var(--r-dim);border-color:rgba(232,104,138,.2);color:var(--rose);}
-.pls{display:flex;flex-direction:column;gap:9px;min-width:110px;align-items:flex-end;}
-.pl{display:inline-flex;align-items:center;gap:6px;
-  font-family:'Courier New',monospace;font-size:.63rem;
-  letter-spacing:.1em;text-transform:uppercase;
-  text-decoration:none;padding:10px 14px;border:1px solid;
-  transition:all .2s;cursor:none;white-space:nowrap;}
-.plr{color:var(--rose);border-color:rgba(232,104,138,.22);}
-.plr:hover{background:var(--r-dim);}
-.plp{color:var(--purple2);border-color:rgba(155,92,245,.2);}
-.plp:hover{background:var(--p-dim);}
-
-/* SKILLS */
-#skills{background:var(--bg2);border-top:1px solid var(--rule2);}
-.skg{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1060px;}
-.sk{background:var(--bg3);padding:30px;border:1px solid var(--rule2);transition:all .22s;}
-.sk:hover{border-color:rgba(232,104,138,.18);background:var(--bg4);}
-.skh{font-family:'Courier New',monospace;font-size:.64rem;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--purple2);
-  margin-bottom:16px;padding-bottom:12px;
-  border-bottom:1px solid var(--rule);}
-.skt{display:flex;flex-wrap:wrap;gap:6px;}
-.sktag{font-size:.69rem;padding:4px 10px;
-  background:var(--dim);border:1px solid var(--rule2);
-  color:var(--muted);transition:all .2s;}
-.sktag:hover{color:var(--white);border-color:var(--rule);}
-
-/* CONTACT */
-#contact{background:var(--bg);border-top:1px solid var(--rule2);text-align:center;}
-.cw{max-width:500px;margin:0 auto;}
-.ci{font-size:.86rem;color:var(--off);line-height:2;margin-bottom:44px;}
-.ce{display:inline-block;font-family:Georgia,serif;
-  font-style:italic;font-size:1.5rem;color:var(--white);
-  text-decoration:none;border-bottom:1px solid rgba(232,104,138,.3);
-  padding-bottom:4px;transition:all .2s;cursor:none;margin-bottom:44px;}
-.ce:hover{color:var(--rose);border-color:var(--rose);}
-.clinks{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
-.cl{display:inline-flex;align-items:center;gap:7px;
-  padding:12px 20px;border:1px solid var(--rule2);
-  color:var(--muted);text-decoration:none;
-  font-family:'Courier New',monospace;font-size:.67rem;
-  letter-spacing:.08em;text-transform:uppercase;
-  cursor:none;transition:all .2s;}
-.cl:hover{color:var(--rose);border-color:rgba(232,104,138,.3);
-  background:var(--r-dim);transform:translateY(-2px);}
-
-/* FOOTER */
-footer{padding:24px 72px;background:var(--bg2);
-  border-top:1px solid var(--rule2);
-  display:flex;justify-content:space-between;align-items:center;}
-.ft{font-family:'Courier New',monospace;font-size:.59rem;
-  color:var(--muted);letter-spacing:.08em;}
-
-/* REVEAL */
-.rev{opacity:0;transform:translateY(24px);
-  transition:opacity .65s ease,transform .65s ease;}
-.rev.in{opacity:1;transform:translateY(0);}
-
-/* DIVIDER */
-.duo-line{
-  display:flex;gap:0;margin:0 0 64px;width:100%;max-width:100%;
-}
-.duo-line span{flex:1;height:1px;}
-.duo-line .l1{background:linear-gradient(90deg,var(--purple),transparent);}
-.duo-line .l2{background:linear-gradient(90deg,transparent,var(--rose));}
-
-@media(max-width:860px){
-  nav{padding:18px 24px;}
-  section{padding:72px 24px;}
-  #hero{padding:120px 24px 72px;}
-  .ag{grid-template-columns:1fr;gap:44px;}
-  .skg{grid-template-columns:1fr 1fr;}
-  .prow{grid-template-columns:1fr;gap:18px;}
-  .pno{display:none;}
-  .pls{flex-direction:row;align-items:flex-start;}
-  footer{padding:22px 24px;flex-direction:column;gap:6px;text-align:center;}
-}
-@media(max-width:540px){
-  .skg{grid-template-columns:1fr;}
-  .stats{grid-template-columns:1fr 1fr;}
-  .h-cta{flex-direction:column;}
-  .nav-links{gap:20px;}
-}
-</style>
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.25rem; }
+      #hero { padding: 7rem 1.25rem 4rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .project-card { grid-template-columns: 1fr; }
+      .project-num { font-size: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="ring"></div>
-
+<!-- NAV -->
 <nav>
-  <a href="#hero" class="logo">D.<span>Olofin</span></a>
+  <a href="#hero" class="nav-logo">D.Olofin</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <span class="nav-badge">Available for remote roles</span>
 </nav>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="hc">
-    <p class="h-label">Available for remote roles</p>
-    <h1 class="h-name">
-      Deborah<br>Olofin
-      <span class="sub">Temi</span>
+<section id="hero" style="padding-top: 8rem; padding-bottom: 5rem; max-width: none;">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content" style="max-width: 1100px; margin: 0 auto; position: relative; z-index: 1;">
+    <div class="hero-label">Data Scientist &amp; ML Engineer</div>
+    <h1>
+      <span class="name-line">Deborah</span>
+      <span class="name-line name-accent">Olofin <span style="color: var(--text);">Temi</span></span>
     </h1>
-    <div class="h-line"></div>
-    <p class="h-title">Data Scientist &nbsp;·&nbsp; Machine Learning Engineer</p>
-    <p class="h-statement">
-      I don't just build models.<br>
-      <strong>I build systems that ship.</strong>
-    </p>
-    <div class="h-cta">
-      <a href="#projects" class="btn-rose">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        View My Work
-      </a>
-      <a href="#contact" class="btn-ghost">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Get In Touch
+    <div class="hero-subtitle">Data Scientist · Machine Learning Engineer</div>
+    <p class="hero-tagline">I don't just build models.<br><strong>I build systems that ship.</strong></p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      <a href="/Deborah_Olofin_Resume.pdf" download="Deborah_Olofin_Resume.pdf" class="btn btn-cv">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download CV
       </a>
     </div>
-    <div class="live-tag">
-      <span class="dot"></span>
-      ML System Live in Production
+    <div class="hero-stat" style="margin-top: 3rem;">
+      <span class="hero-stat-dot"></span>
+      <span class="hero-stat-text">ML System Live in Production</span>
     </div>
   </div>
 </section>
+
+<div class="section-divider"></div>
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="eye">01 — About</div>
-  <h2 class="stitle rev">Who I Am</h2>
-  <div class="duo-line rev"><span class="l1"></span><span class="l2"></span></div>
-  <div class="ag">
-    <div class="at rev">
+  <div class="section-label">01 — About</div>
+  <h2>Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text fade-in">
       <p>I'm a <strong>Data Scientist and ML Engineer</strong> with a Computer Science foundation and a production ML system currently live and serving real users. I operate across the full spectrum — from rigorous statistical analysis and <strong>time-series forecasting</strong> to end-to-end ML pipeline architecture and live deployment.</p>
-      <div class="pq">Most people build models in notebooks that never leave their laptops. I build systems that ship.</div>
+      <p>Most people build models in notebooks that never leave their laptops. I build systems that ship.</p>
       <p>My anchor project is a deployed system built on WFP humanitarian data, predicting food prices up to 3 months ahead across conflict-affected states. I independently built approximately <strong>85–90% of the full technical pipeline</strong> while leading a 12-person cross-functional team.</p>
       <p>Grounded in the <strong>mathematics, algorithms and systems thinking</strong> that sit underneath models. Currently completing <strong>WorldQuant University Applied Data Science Lab</strong> and the <strong>DataCamp ML Engineering track</strong>, while building a Crypto AI Intelligence System.</p>
     </div>
-    <div class="stats rev">
-      <div class="sc"><div class="sn">85–90%</div><div class="sl">of capstone technical pipeline built independently</div></div>
-      <div class="sc"><div class="sn">50K+</div><div class="sl">raw data rows processed into model-ready observations</div></div>
-      <div class="sc"><div class="sn">4</div><div class="sl">ML models built, evaluated and compared in production</div></div>
-      <div class="sc"><div class="sn">3.78</div><div class="sl">CGPA — BSc Computer Science</div></div>
+    <div class="about-stats fade-in">
+      <div class="stat-card">
+        <div class="stat-number">85–90%</div>
+        <div class="stat-desc">of capstone technical pipeline built independently</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50K+</div>
+        <div class="stat-desc">raw data rows processed into model-ready observations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4</div>
+        <div class="stat-desc">ML models built, evaluated and compared in production</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3.78</div>
+        <div class="stat-desc">CGPA — BSc Computer Science</div>
+      </div>
     </div>
   </div>
 </section>
+
+<div class="section-divider"></div>
 
 <!-- PROJECTS -->
 <section id="projects">
-  <div class="eye">02 — Projects</div>
-  <h2 class="stitle rev">What I've Built</h2>
-  <div class="plist">
+  <div class="section-label">02 — Projects</div>
+  <h2>What I've Built</h2>
+  <div class="projects-grid">
 
-    <div class="prow rev">
-      <div class="pno">01</div>
-      <div>
-        <div class="ptags">
-          <span class="pt tl"><span style="display:inline-block;width:5px;height:5px;background:var(--rose);border-radius:50%;margin-right:5px;vertical-align:middle;animation:pulse 1.5s infinite;"></span>Live</span>
+    <!-- Project 01: Food Price Monitor -->
+    <div class="project-card fade-in">
+      <div class="project-num">01</div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-title">Early Warning Food Price Monitor</div>
+          <span class="status-badge status-live">Live</span>
         </div>
-        <h3 class="pn">Early Warning Food Price Monitor</h3>
-        <p class="pr">Team Lead · Lead Data Scientist · Primary ML Engineer</p>
-        <p class="pd">Production-grade multi-model time-series forecasting system predicting monthly retail food prices up to 3 months ahead. Built on WFP humanitarian data — sourced and cleaned 8 datasets, engineered a master dataset of ~2,846 observations from 50,000+ raw rows, trained and evaluated 4 forecasting models against a naive baseline, and deployed a live Streamlit application accessible to non-technical users.</p>
-        <div class="mets">
-          <div><div class="mv">14.7%</div><div class="ml">Best MAPE</div></div>
-          <div><div class="mv">30.8%</div><div class="ml">Avg MAPE</div></div>
-          <div><div class="mv">10/13</div><div class="ml">Prophet wins</div></div>
-          <div><div class="mv">~2,846</div><div class="ml">Model-ready rows</div></div>
+        <div class="project-subtitle">Team Lead · Lead Data Scientist · Primary ML Engineer</div>
+        <p class="project-desc">Production-grade multi-model time-series forecasting system predicting monthly retail food prices up to 3 months ahead. Built on WFP humanitarian data — sourced and cleaned 8 datasets, engineered a master dataset of ~2,846 observations from 50,000+ raw rows, trained and evaluated 4 forecasting models against a naive baseline, and deployed a live Streamlit application accessible to non-technical users.</p>
+        <div class="project-metrics">
+          <div class="metric"><span class="metric-val">14.7%</span><span class="metric-label">Best MAPE</span></div>
+          <div class="metric"><span class="metric-val">30.8%</span><span class="metric-label">Avg MAPE</span></div>
+          <div class="metric"><span class="metric-val">10/13</span><span class="metric-label">Prophet wins</span></div>
+          <div class="metric"><span class="metric-val">~2,846</span><span class="metric-label">Model-ready rows</span></div>
         </div>
-        <div class="pills">
-          <span class="pill">Python</span><span class="pill">Prophet</span><span class="pill">XGBoost</span>
-          <span class="pill">SARIMA</span><span class="pill">SARIMAX</span><span class="pill">Pandas</span>
-          <span class="pill">Scikit-learn</span><span class="pill">Streamlit</span><span class="pill">Git</span>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Prophet</span><span class="tag">XGBoost</span>
+          <span class="tag">SARIMA</span><span class="tag">SARIMAX</span><span class="tag">Pandas</span>
+          <span class="tag">Scikit-learn</span><span class="tag">Streamlit</span><span class="tag">Git</span>
         </div>
-      </div>
-      <div class="pls">
-        <a href="https://earlywarningfoodpricemonitor-group3.streamlit.app" target="_blank" class="pl plr">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          Live App
-        </a>
-        <a href="https://github.com/Mi-kami/Early-Warning-Food-Price-Monitor-Northeast-Nigeria" target="_blank" class="pl plp">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-          GitHub
-        </a>
+        <div class="project-links">
+          <a href="https://earlywarningfoodpricemonitor-group3.streamlit.app" class="project-link" target="_blank">Live App</a>
+          <a href="https://github.com/Mi-kami/Early-Warning-Food-Price-Monitor-Northeast-Nigeria" class="project-link" target="_blank">GitHub</a>
+        </div>
       </div>
     </div>
 
-    <div class="prow rev">
-      <div class="pno">02</div>
-      <div>
-        <div class="ptags"><span class="pt td">Complete</span></div>
-        <h3 class="pn">Customer Segmentation System</h3>
-        <p class="pr">Independent Project</p>
-        <p class="pd">K-means clustering pipeline for customer segmentation. Applied elbow method for optimal cluster selection, performed full exploratory data analysis, and produced interpretable segment profiles to support downstream business decision-making.</p>
-        <div class="pills">
-          <span class="pill">Python</span><span class="pill">K-Means</span><span class="pill">Scikit-learn</span>
-          <span class="pill">Pandas</span><span class="pill">Matplotlib</span><span class="pill">Seaborn</span>
+    <!-- Project 02: Crypto AI -->
+    <div class="project-card fade-in">
+      <div class="project-num">02</div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-title">Crypto AI Intelligence System</div>
+          <span class="status-badge status-building">Building</span>
         </div>
-      </div>
-      <div class="pls">
-        <a href="https://github.com/Mi-kami" target="_blank" class="pl plp">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-          GitHub
-        </a>
+        <div class="project-subtitle">Personal Project · Jan 2026 – Present</div>
+        <p class="project-desc">End-to-end AI-powered cryptocurrency intelligence platform in active development. Phase 1 complete: production-grade multi-source data ingestion pipeline with full error handling and tested failure modes. Phase 2 in progress: storage architecture and database design. Covers volatility prediction, market regime detection, and sentiment analysis from live data sources.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">MLflow</span>
+          <span class="tag">Docker</span><span class="tag">Railway</span><span class="tag">CI/CD</span>
+          <span class="tag">Streamlit</span><span class="tag">GARCH</span><span class="tag">FinBERT</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Mi-kami" class="project-link" target="_blank">GitHub</a>
+        </div>
       </div>
     </div>
 
-    <div class="prow rev">
-      <div class="pno">03</div>
-      <div>
-        <div class="ptags"><span class="pt td">Complete</span></div>
-        <h3 class="pn">Revenue Prediction — Data Scarcity Study</h3>
-        <p class="pr">Independent Project</p>
-        <p class="pd">Multiple linear regression pipeline on a deliberately constrained 50-row dataset, investigating model reliability under data scarcity. Documented train-test split sensitivity, overfitting patterns, regularisation techniques (Ridge, ElasticNet), and validated stability via cross-validation and multi-seed testing. Confirmed: data volume is a hard ceiling no algorithm can fully overcome.</p>
-        <div class="pills">
-          <span class="pill">Python</span><span class="pill">Linear Regression</span><span class="pill">Ridge</span>
-          <span class="pill">ElasticNet</span><span class="pill">GridSearchCV</span><span class="pill">Scikit-learn</span>
+    <!-- Project 03: NLP Sentiment -->
+    <div class="project-card fade-in">
+      <div class="project-num">03</div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-title">NLP Sentiment Analysis System</div>
+          <span class="status-badge status-complete">Complete</span>
         </div>
-      </div>
-      <div class="pls">
-        <a href="https://github.com/Mi-kami" target="_blank" class="pl plp">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-          GitHub
-        </a>
+        <div class="project-subtitle">Independent Project — Codveda Internship · Apr 2026</div>
+        <p class="project-desc">End-to-end NLP text classification pipeline classifying financial and social media sentiment into five categories. Built full preprocessing pipeline (tokenisation, stopword removal, lemmatisation), trained and evaluated multiple classifiers, and engineered features using TF-IDF vectorisation with stratified cross-validation.</p>
+        <div class="project-metrics">
+          <div class="metric"><span class="metric-val">5-class</span><span class="metric-label">Sentiment classes</span></div>
+          <div class="metric"><span class="metric-val">732</span><span class="metric-label">Dataset rows</span></div>
+          <div class="metric"><span class="metric-val">3</span><span class="metric-label">Classifiers trained</span></div>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">NLTK</span><span class="tag">Scikit-learn</span>
+          <span class="tag">TF-IDF</span><span class="tag">Logistic Regression</span>
+          <span class="tag">Naive Bayes</span><span class="tag">Random Forest</span><span class="tag">Pandas</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Mi-kami" class="project-link" target="_blank">GitHub</a>
+        </div>
       </div>
     </div>
 
-    <div class="prow rev">
-      <div class="pno">04</div>
-      <div>
-        <div class="ptags">
-          <span class="pt tw"><span style="display:inline-block;width:5px;height:5px;background:var(--muted);border-radius:50%;margin-right:5px;vertical-align:middle;animation:pulse 2s infinite;"></span>In Progress</span>
+    <!-- Project 04: FFNN MNIST -->
+    <div class="project-card fade-in">
+      <div class="project-num">04</div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-title">Feedforward Neural Network — MNIST</div>
+          <span class="status-badge status-complete">Complete</span>
         </div>
-        <h3 class="pn">Crypto AI Intelligence System</h3>
-        <p class="pr">AI Intelligence System — Building Now</p>
-        <p class="pd">End-to-end AI-powered intelligence system for cryptocurrency markets. Covers volatility prediction, market regime detection, sentiment analysis from live data sources, and risk signal generation. Building in public — estimated completion Q2 2026.</p>
-        <div class="pills">
-          <span class="pill">Python</span><span class="pill">Time Series</span>
-          <span class="pill">Sentiment Analysis</span><span class="pill">Regime Detection</span>
-          <span class="pill">Risk Modelling</span><span class="pill">Railway</span>
-          <span class="pill">Garch</span><span class="pill">Docker</span>
-          <span class="pill">CI/CD</span><span class="pill">MLflow</span>
+        <div class="project-subtitle">Independent Project — Codveda Internship · Apr 2026</div>
+        <p class="project-desc">Designed, built and trained a feedforward neural network from scratch using TensorFlow and Keras for handwritten digit classification. Implemented full training pipeline including layer architecture design, ReLU activations, dropout regularisation, batch normalisation and learning rate tuning. Tracked training and validation curves to diagnose overfitting and tune model depth.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Keras</span>
+          <span class="tag">NumPy</span><span class="tag">Matplotlib</span>
+          <span class="tag">Dropout</span><span class="tag">Batch Norm</span><span class="tag">Softmax</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Mi-kami" class="project-link" target="_blank">GitHub</a>
         </div>
       </div>
-      <div class="pls">
-        <span style="font-family:'Courier New',monospace;font-size:.61rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">Building</span>
+    </div>
+
+    <!-- Project 05: Customer Segmentation -->
+    <div class="project-card fade-in">
+      <div class="project-num">05</div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-title">Customer Segmentation System</div>
+          <span class="status-badge status-complete">Complete</span>
+        </div>
+        <div class="project-subtitle">Independent Project · 2025</div>
+        <p class="project-desc">K-means clustering pipeline for customer segmentation. Applied elbow method for optimal cluster selection, performed full exploratory data analysis, and produced interpretable segment profiles to support downstream business decision-making.</p>
+        <div class="project-metrics">
+          <div class="metric"><span class="metric-val">0.554</span><span class="metric-label">Silhouette score</span></div>
+          <div class="metric"><span class="metric-val">5</span><span class="metric-label">Clusters identified</span></div>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">K-Means</span><span class="tag">Scikit-learn</span>
+          <span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Mi-kami" class="project-link" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 06: Revenue Prediction -->
+    <div class="project-card fade-in">
+      <div class="project-num">06</div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-title">Revenue Prediction — Data Scarcity Study</div>
+          <span class="status-badge status-complete">Complete</span>
+        </div>
+        <div class="project-subtitle">Independent Project · 2025</div>
+        <p class="project-desc">Multiple linear regression pipeline on a deliberately constrained 50-row dataset, investigating model reliability under data scarcity. Documented train-test split sensitivity, overfitting patterns and regularisation techniques (Ridge, ElasticNet), and validated stability via cross-validation and multi-seed testing. Confirmed: data volume is a hard ceiling no algorithm can fully overcome.</p>
+        <div class="project-metrics">
+          <div class="metric"><span class="metric-val">50</span><span class="metric-label">Row dataset</span></div>
+          <div class="metric"><span class="metric-val">0.139</span><span class="metric-label">Cross-seed variance</span></div>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Linear Regression</span><span class="tag">Ridge</span>
+          <span class="tag">ElasticNet</span><span class="tag">GridSearchCV</span><span class="tag">Scikit-learn</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Mi-kami" class="project-link" target="_blank">GitHub</a>
+        </div>
       </div>
     </div>
 
   </div>
 </section>
+
+<div class="section-divider"></div>
 
 <!-- SKILLS -->
 <section id="skills">
-  <div class="eye">03 — Skills</div>
-  <h2 class="stitle rev">What I Work With</h2>
-  <div class="skg">
-    <div class="sk rev">
-      <div class="skh">Languages & Libraries</div>
-      <div class="skt">
-        <span class="sktag">Python</span><span class="sktag">Pandas</span><span class="sktag">SQL</span>
-        <span class="sktag">NumPy</span><span class="sktag">Scikit-learn</span>
-        <span class="sktag">Matplotlib</span><span class="sktag">Seaborn</span>
+  <div class="section-label">03 — Skills</div>
+  <h2>What I Work With</h2>
+  <div class="skills-grid">
+    <div class="skill-card fade-in">
+      <div class="skill-category">Languages & Libraries</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">SQL</span>
+        <span class="tag">NumPy</span><span class="tag">Scikit-learn</span>
+        <span class="tag">Matplotlib</span><span class="tag">Seaborn</span>
       </div>
     </div>
-    <div class="sk rev">
-      <div class="skh">ML & Forecasting</div>
-      <div class="skt">
-        <span class="sktag">Facebook Prophet</span><span class="sktag">XGBoost</span>
-        <span class="sktag">SARIMA</span><span class="sktag">SARIMAX</span>
-        <span class="sktag">Linear Regression</span><span class="sktag">K-Means</span>
+    <div class="skill-card fade-in">
+      <div class="skill-category">ML & Forecasting</div>
+      <div class="skill-tags">
+        <span class="tag">Facebook Prophet</span><span class="tag">XGBoost</span>
+        <span class="tag">SARIMA</span><span class="tag">SARIMAX</span>
+        <span class="tag">Linear Regression</span><span class="tag">K-Means</span>
       </div>
     </div>
-    <div class="sk rev">
-      <div class="skh">Data Science</div>
-      <div class="skt">
-        <span class="sktag">Time-Series Forecasting</span>
-        <span class="sktag">Feature Engineering</span>
-        <span class="sktag">Model Evaluation</span>
-        <span class="sktag">Multi-Horizon Forecasting</span>
-        <span class="sktag">Cross-Validation</span>
-        <span class="sktag">EDA</span>
+    <div class="skill-card fade-in">
+      <div class="skill-category">Deep Learning & NLP</div>
+      <div class="skill-tags">
+        <span class="tag">TensorFlow</span><span class="tag">Keras</span>
+        <span class="tag">NLTK</span><span class="tag">TF-IDF</span>
+        <span class="tag">Sentiment Analysis</span><span class="tag">FFNN</span>
       </div>
     </div>
-    <div class="sk rev">
-      <div class="skh">Pipeline Engineering</div>
-      <div class="skt">
-        <span class="sktag">End-to-End ML Pipelines</span>
-        <span class="sktag">Multi-Source Integration</span>
-        <span class="sktag">Data Cleaning</span>
-        <span class="sktag">Lag Features</span>
-        <span class="sktag">Structural Break Detection</span>
-        <span class="sktag">Outlier Detection</span>
+    <div class="skill-card fade-in">
+      <div class="skill-category">Data Science</div>
+      <div class="skill-tags">
+        <span class="tag">Time-Series Forecasting</span><span class="tag">Feature Engineering</span>
+        <span class="tag">Model Evaluation</span><span class="tag">Multi-Horizon Forecasting</span>
+        <span class="tag">Cross-Validation</span><span class="tag">EDA</span>
       </div>
     </div>
-    <div class="sk rev">
-      <div class="skh">Deployment & Tools</div>
-      <div class="skt">
-        <span class="sktag">Streamlit</span><span class="sktag">Git</span>
-        <span class="sktag">GitHub</span><span class="sktag">Jupyter</span>
-        <span class="sktag">Google Colab</span><span class="sktag">Version Control</span>
-        <span class="sktag">Docker</span><span class="sktag">MLflow</span><span class="sktag">Railway</span>
+    <div class="skill-card fade-in">
+      <div class="skill-category">Pipeline Engineering</div>
+      <div class="skill-tags">
+        <span class="tag">End-to-End ML Pipelines</span><span class="tag">Multi-Source Integration</span>
+        <span class="tag">Data Cleaning</span><span class="tag">Lag Features</span>
+        <span class="tag">Structural Break Detection</span><span class="tag">Outlier Detection</span>
       </div>
     </div>
-    <div class="sk rev">
-      <div class="skh">Foundations & Design</div>
-      <div class="skt">
-        <span class="sktag">Algorithm Design</span>
-        <span class="sktag">Data Structures</span>
-        <span class="sktag">Database Systems</span>
-        <span class="sktag">Graphic Design</span>
-        <span class="sktag">Canva</span>
-        <span class="sktag">Data Storytelling</span>
+    <div class="skill-card fade-in">
+      <div class="skill-category">Deployment & Tools</div>
+      <div class="skill-tags">
+        <span class="tag">Streamlit</span><span class="tag">Git</span><span class="tag">GitHub</span>
+        <span class="tag">Jupyter</span><span class="tag">Google Colab</span>
+        <span class="tag">Docker</span><span class="tag">MLflow</span><span class="tag">Railway</span>
       </div>
     </div>
   </div>
 </section>
 
+<div class="section-divider"></div>
+
 <!-- CONTACT -->
 <section id="contact">
-  <div class="eye" style="justify-content:center;">04 — Contact</div>
-  <h2 class="stitle rev" style="text-align:center;">Let's Work Together</h2>
-  <div class="cw rev">
-    <p class="ci">I'm actively seeking remote Data Scientist and ML Engineer roles internationally. If your team works on hard problems with real data — I want to hear from you.</p>
-    <a href="mailto:deboraholofin43@gmail.com" class="ce">deboraholofin43@gmail.com</a>
-    <div class="clinks">
-      <a href="https://linkedin.com/in/deborah-olofin" target="_blank" class="cl">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        LinkedIn
-      </a>
-      <a href="https://github.com/Mi-kami" target="_blank" class="cl">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        GitHub
-      </a>
-      <a href="https://earlywarningfoodpricemonitor-group3.streamlit.app" target="_blank" class="cl">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        Live Project
+  <div class="section-label">04 — Contact</div>
+  <h2>Let's Work Together</h2>
+  <div class="contact-inner">
+    <p>I'm actively seeking remote Data Scientist and ML Engineer roles internationally. If your team works on hard problems with real data — I want to hear from you.</p>
+    <a href="mailto:deboraholofin43@gmail.com" class="contact-email">deboraholofin43@gmail.com</a>
+    <div class="contact-links">
+      <a href="https://linkedin.com/in/deborah-olofin" class="btn btn-outline" target="_blank">LinkedIn</a>
+      <a href="https://github.com/Mi-kami" class="btn btn-outline" target="_blank">GitHub</a>
+      <a href="https://earlywarningfoodpricemonitor-group3.streamlit.app" class="btn btn-outline" target="_blank">Live Project</a>
+      <a href="/Deborah_Olofin_Resume.pdf" download="Deborah_Olofin_Resume.pdf" class="btn btn-cv">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download CV
       </a>
     </div>
   </div>
 </section>
 
 <footer>
-  <span class="ft">© 2026 Deborah Olofin — Data Scientist & ML Engineer</span>
-  <span class="ft">Built to last.</span>
+  © 2026 Deborah Olofin — Data Scientist &amp; ML Engineer &nbsp;·&nbsp; Built to last.
 </footer>
 
 <script>
-const cur=document.getElementById('cur'),ring=document.getElementById('ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-});
-(function loop(){
-  rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a,button,.prow,.sc,.sk').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    cur.style.transform='translate(-50%,-50%) scale(2.4)';
-    cur.style.background='var(--purple2)';
-    ring.style.width='50px';ring.style.height='50px';
-    ring.style.borderColor='rgba(155,92,245,.5)';
-  });
-  el.addEventListener('mouseleave',()=>{
-    cur.style.transform='translate(-50%,-50%) scale(1)';
-    cur.style.background='var(--rose)';
-    ring.style.width='36px';ring.style.height='36px';
-    ring.style.borderColor='rgba(232,104,138,.4)';
-  });
-});
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
-},{threshold:0.08});
-document.querySelectorAll('.rev').forEach((el,i)=>{
-  el.style.transitionDelay=(i%4)*.07+'s';
-  obs.observe(el);
-});
+  // Scroll fade-in
+  const faders = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  faders.forEach(el => observer.observe(el));
+
+  // Typing animation for hero
+  const typed = document.querySelector('.hero-subtitle');
+  if (typed) {
+    const text = typed.textContent;
+    typed.textContent = '';
+    typed.classList.add('typing-cursor');
+    let i = 0;
+    const type = () => {
+      if (i < text.length) {
+        typed.textContent += text[i++];
+        setTimeout(type, 60);
+      } else {
+        typed.classList.remove('typing-cursor');
+      }
+    };
+    setTimeout(type, 600);
+  }
 </script>
 </body>
 </html>
